@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 
-const pacienteSchema = new Schema({
+const usuarioSchema = new Schema({
   nombre: {
     type: String,
     minLength: 2,
