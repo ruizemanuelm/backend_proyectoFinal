@@ -7,6 +7,18 @@ export const obtenerPacientes = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(404).json({
+      mensaje: "Error al buscar los pacientes",
+    });
+  }
+};
+
+export const obtenerPacientePorId = async (req, res) => {
+  try {
+    const paciente = await Paciente.findById(req.params.id );
+    res.status(200).json(paciente);
+  } catch (error) {
+    console.log(error);
+    res.status(404).json({
       mensaje: "Error al buscar al paciente",
     });
   }

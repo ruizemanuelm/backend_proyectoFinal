@@ -1,14 +1,14 @@
 import { Schema, model } from 'mongoose'
 
 const pacienteSchema = new Schema({
-    nombre: {
+    nombreDueno: {
       type: String,
       minLength: 2,
       maxLength: 100,
       required: true,
       unique: true,
     },
-    apellido: {
+    apellidoDueno: {
       type: String,
       minLength: 2,
       maxLength: 100,
@@ -43,12 +43,16 @@ const pacienteSchema = new Schema({
       maxLength: 100,
       required: true,
     },
-    mascota: {
+    nombreMascota: {
       type: String,
       minLength: 2,
       maxLength: 100,
       required: true,
-    }
+    },
+    especie: {
+      type: String,
+      required: true
+    },
 });
   
   const Paciente = model("paciente", pacienteSchema);
