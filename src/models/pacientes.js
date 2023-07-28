@@ -28,7 +28,7 @@ const pacienteSchema = new Schema({
         },
       },
       telefono: {
-        type: String,
+        type: Number,
         required: true,
         validate: {
           validator: function (value) {
