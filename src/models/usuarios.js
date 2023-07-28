@@ -39,6 +39,6 @@ const usuarioSchema = new Schema({
   },
 });
 
-const Usuario = model("usuario", pacienteSchema);
+const Usuario = model("usuario", usuarioSchema);
 
 export default Usuario;
