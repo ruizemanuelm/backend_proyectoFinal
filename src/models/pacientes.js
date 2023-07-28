@@ -32,7 +32,6 @@ const pacienteSchema = new Schema({
         required: true,
         validate: {
           validator: function (value) {
-            // Requerir que el número de teléfono tenga solo dígitos y una longitud específica (por ejemplo, 10 dígitos)
             return /^\d{10}$/.test(value);
           },
           message: 'El número de teléfono debe contener 10 dígitos',
