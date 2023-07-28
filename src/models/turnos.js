@@ -11,14 +11,19 @@ const turnoSchema = new Schema({
           message: 'La fecha de nacimiento debe ser una fecha actual o futura',
         },
       },
-    hora: {
-      type: Number,
-      validate: {
-        validator: isValidTime,
-        message: '{VALUE} no es una hora válida (debe estar entre 9 y 18).'
+      hora: {
+        type: Date,
+        required: true,
+        validate: {
+          validator: function (value) {
+            const currentTime = new Date();
+            const selectedTime = new Date(currentTime);
+            selectedTime.setHours(value.getHours(), value.getMinutes(), value.getSeconds());
+            return selectedTime >= currentTime;
+          },
+          message: 'La hora de la cita debe ser una hora actual o futura',
+        },
       },
-      required: true,
-    },
     veterinario: {
       type: String,
       enum: ['Veterinario', 'Veterinaria'],
@@ -26,6 +31,8 @@ const turnoSchema = new Schema({
     },
     detalleCita: {
       type: String,
+      minLength: 2,
+      maxLength: 400,
       required: true,
     },
   });
