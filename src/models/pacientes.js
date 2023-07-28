@@ -15,11 +15,18 @@ const pacienteSchema = new Schema({
       required: true,
     },
     email: {
-      type: String,
-      minLength: 2,
-      maxLength: 100,
-      required: true,
-    },
+        type: String,
+        required: true,
+        unique: true,
+        validate: {
+          validator: function (value) {
+            return /^[\w-]+(\.[\w-]+)*@([A-Za-z0-9-]+\.)*[A-Za-z0-9-]+(\.[A-Za-z]{2,})$/.test(
+              value
+            );
+          },
+          message: "Correo electrónico inválido",
+        },
+      },
     telefono: {
       type: Number,
       minLength: 10,
