@@ -1,13 +1,6 @@
 import { Schema, model } from "mongoose";
 
 const usuarioSchema = new Schema({
-  nombre: {
-    type: String,
-    minLength: 2,
-    maxLength: 100,
-    required: true,
-    unique: true,
-  },
   nombreUsuario: {
     type: String,
     minLength: 2,
