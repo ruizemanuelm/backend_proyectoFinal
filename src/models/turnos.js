@@ -2,22 +2,28 @@ import { Schema, model } from 'mongoose'
 
 const turnoSchema = new Schema({
     fechaTurno: {
-      type: Date,
-      validate: {
-        validator: isValidDate,
-        message: '{VALUE} no es una fecha válida en formato AAAA-MM-DD'
+        type: Date,
+        required: true,
+        validate: {
+          validator: function (value) {
+            return value >= new Date();
+          },
+          message: 'La fecha de nacimiento debe ser una fecha actual o futura',
+        },
       },
-      required: true,
-      unique: true,
-    },
-    hora: {
-      type: Number,
-      validate: {
-        validator: isValidTime,
-        message: '{VALUE} no es una hora válida (debe estar entre 9 y 18).'
+      hora: {
+        type: Date,
+        required: true,
+        validate: {
+          validator: function (value) {
+            const currentTime = new Date();
+            const selectedTime = new Date(currentTime);
+            selectedTime.setHours(value.getHours(), value.getMinutes(), value.getSeconds());
+            return selectedTime >= currentTime;
+          },
+          message: 'La hora de la cita debe ser una hora actual o futura',
+        },
       },
-      required: true,
-    },
     veterinario: {
       type: String,
       enum: ['Veterinario', 'Veterinaria'],
@@ -25,6 +31,8 @@ const turnoSchema = new Schema({
     },
     detalleCita: {
       type: String,
+      minLength: 2,
+      maxLength: 400,
       required: true,
     },
   });
