@@ -5,7 +5,7 @@ const router = Router()
 router.get("/turnos",obtenerTurnos)
 router.post("/turnos",crearTurno)
 router
-  .route("/pacientes/:id")
+  .route("/turnos/:id")
   .delete(borrarTurno)
   .put(editarTurno)
   .get(obtenerTurnoPorId);
