@@ -33,3 +33,16 @@ export const borrarTurno = async (req, res) => {
     }
   };
   
+  export const editarTurno = async (req, res) => {
+    try {
+      await Turno.findByIdAndUpdate(req.params.id, req.body);
+      res.status(200).json({
+        mensaje: "Los datos del turno fueron modificados correctamente"
+      })
+    } catch (error) {
+      console.log(error);
+      res.status(400).json({
+        mensaje: "No se pudo modificar los datos del turno",
+      });
+    }
+  };
