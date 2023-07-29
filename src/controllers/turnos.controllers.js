@@ -9,6 +9,19 @@ export const obtenerTurnos = async (req,res)=>{
         res.status(404).json({mensaje:'error al buscar los turnos'})
     }
 }
+  
+  export const obtenerTurnoPorId = async (req, res) => {
+    try {
+      const turno = await Turno.findById(req.params.id );
+      res.status(200).json(turno);
+    } catch (error) {
+      console.log(error);
+      res.status(404).json({
+        mensaje: "Error al buscar el turno",
+      });
+    }
+  };
+  
 export const crearTurno = async(req,res) =>{
     try {
        const nuevoTurno = new Turno(req.body)
