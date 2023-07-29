@@ -4,6 +4,7 @@ import morgan from "morgan";
 import path from "path";
 import "dotenv/config"
 import "./src/database/dbConnection"
+import pacientesRouter from './src/routes/pacientes.routes'
 const app = express();
 
 app.set("port", process.env.PORT || 4000);
@@ -16,3 +17,7 @@ app.use(express.json());
 app.use(morgan("dev"));
 console.log(path.join(__dirname, "/public"));
 app.use(express.static(path.join(__dirname, "/public")));
+
+
+//rutas
+app.use('/apihuellitas', pacientesRouter)
