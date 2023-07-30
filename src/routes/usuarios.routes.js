@@ -3,7 +3,7 @@ import { crearUsuario, loguearUsuario } from "../controllers/usuarios.controller
 
 const router = Router()
 
-router.get("/usuarios",loguearUsuario)
-router.post("/usuarios",crearUsuario)
+router.post("/usuarios/login",loguearUsuario)
+router.post("/usuarios/register",crearUsuario)
 
 export default router
