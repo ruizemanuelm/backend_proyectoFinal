@@ -4,6 +4,7 @@ import morgan from "morgan";
 import path from "path";
 import "dotenv/config"
 import "./src/database/dbConnection"
+import usuariosRoutes from "./src/routes/usuarios.routes"
 import turnosRouter from './src/routes/turnos.routes'
 import pacientesRouter from './src/routes/pacientes.routes'
 const app = express();
@@ -19,6 +20,8 @@ app.use(morgan("dev"));
 console.log(path.join(__dirname, "/public"));
 app.use(express.static(path.join(__dirname, "/public")));
 
+
 //rutas
+app.use('/apihuellitas', usuariosRoutes);
 app.use('/apihuellitas', turnosRouter)
 app.use('/apihuellitas', pacientesRouter)
