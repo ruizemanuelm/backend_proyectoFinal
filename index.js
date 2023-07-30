@@ -19,4 +19,4 @@ console.log(path.join(__dirname, "/public"));
 app.use(express.static(path.join(__dirname, "/public")));
 
 
-app.use('/api/veterinaria', usuariosRoutes);
+app.use('/apihuellitas', usuariosRoutes);
