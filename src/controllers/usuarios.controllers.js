@@ -36,3 +36,23 @@ export const crearUsuario = async(req,res) =>{
         res.status(400).json(error.message)
     }
 }
+
+
+export const obtenerUsuarios = async(req,res) =>{
+    try {
+        const usuarios = await Usuario.find()
+        res.status(200).json(usuarios)
+    } catch (error) {
+        res.status(404).json(error)
+    }
+}
+
+
+export const obtenerUnUsuario = async(req,res) =>{
+    try {
+        const usuarios = await Usuario.findById(req.params.id)
+        res.status(200).json(usuarios)
+    } catch (error) {
+        res.status(404).json({mensaje:"Error al buscar el usuario"})
+    }
+}
