@@ -8,31 +8,42 @@ const turnoSchema = new Schema({
           validator: function (value) {
             return value >= new Date();
           },
-          message: 'La fecha de nacimiento debe ser una fecha actual o futura',
+          message: 'La fecha debe ser una fecha actual o futura',
         },
       },
-      hora: {
-        type: Date,
+      nombMascota: {
+        type: String,
+        minLength: 2,
+        maxLength: 15,
         required: true,
+      },
+      hora: {
+        type: String,
+        required: true,
+        match: /^([01]\d|2[0-3]):([0-5]\d)$/,
         validate: {
-          validator: function (value) {
-            const currentTime = new Date();
-            const selectedTime = new Date(currentTime);
-            selectedTime.setHours(value.getHours(), value.getMinutes(), value.getSeconds());
-            return selectedTime >= currentTime;
+          validator: function (hora) {
+            const horaMin = "08:00";
+            const horaMaxManana = "12:00";
+            const horaMinTarde = "14:00";
+            const horaMax = "18:00";
+    
+            return (
+              (hora >= horaMin && hora <= horaMaxManana) ||
+              (hora >= horaMinTarde && hora <= horaMax)
+            );
           },
-          message: 'La hora de la cita debe ser una hora actual o futura',
+          message: "La hora debe estar entre 08:00 y 12:00 o entre 14:00 y 18:00.",
         },
       },
     veterinario: {
       type: String,
-      enum: ['Veterinario', 'Veterinaria'],
       required: true,
     },
     detalleCita: {
       type: String,
-      minLength: 2,
-      maxLength: 400,
+      minLength: 10,
+      maxLength: 100,
       required: true,
     },
   });

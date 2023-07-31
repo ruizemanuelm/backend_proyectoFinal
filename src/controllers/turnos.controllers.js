@@ -1,3 +1,4 @@
+import { validationResult } from "express-validator";
 import Turno from "../models/turnos";
 
 export const obtenerTurnos = async (req,res)=>{
@@ -24,6 +25,12 @@ export const obtenerTurnos = async (req,res)=>{
   
 export const crearTurno = async(req,res) =>{
     try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        errores: errors.array()
+      })
+    }
        const nuevoTurno = new Turno(req.body)
        await nuevoTurno.save()
        res.status(201).json({mensaje:"Se creo un nuevo turno"})
