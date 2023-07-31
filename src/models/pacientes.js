@@ -5,8 +5,7 @@ const pacienteSchema = new Schema({
       type: String,
       minLength: 2,
       maxLength: 100,
-      required: true,
-      unique: true,
+      required: true
     },
     apellidoDueno: {
       type: String,
@@ -53,6 +52,10 @@ const pacienteSchema = new Schema({
       type: String,
       required: true
     },
+    raza: {
+      type: String,
+      required: true
+    }
 });
   
   const Paciente = model("paciente", pacienteSchema);

@@ -1,3 +1,4 @@
+import { validationResult } from "express-validator";
 import Paciente from "../models/pacientes";
 
 export const obtenerPacientes = async (req, res) => {
@@ -26,7 +27,14 @@ export const obtenerPacientePorId = async (req, res) => {
 
 export const crearPacientes = async (req, res) => {
   try {
-    // console.log(req.body)
+    //validar
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        errores: errors.array()
+      })
+    }
+
     const pacienteNuevo = new Paciente(req.body);
     await pacienteNuevo.save();
     res.status(201).json({
