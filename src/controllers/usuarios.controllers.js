@@ -1,25 +1,26 @@
 import Usuario from "../models/usuarios";
 
-export const loguearUsuario = async(req,res) =>{
+export const loguearUsuario = async (req, res) => {
     try {
-        const usuarios = await Usuario.find()
-        usuarios.forEach(usuario => {
-            if(usuario.email===req.body.email){
-                if(usuario.password===req.body.password){
-                    return res.status(202).json({
-                        message:'usuario logueado',
-                        nombreUsuario: usuario.nombreUsuario
-                    })
-                }
-                res.status(400).json({
-                    message:'password incorrecta'
-                })
-            }
-                res.status(400).json({
-                    message:'email incorrecto'
-                })
-
-        });
+        const usuarios = await Usuario.find({ email: req.body.email });
+        if (usuarios.length === 0) {
+            return res.status(400).json({
+                message: 'Email incorrecto'
+            });
+        }
+        const usuario = usuarios[0];
+        if (usuario.password === req.body.password) {
+            return res.status(202).json({
+                message: 'Usuario logueado',
+                nombreUsuario: usuario.nombreUsuario,
+                email: usuario.email,
+                password: usuario.password
+            });
+        } else {
+            return res.status(400).json({
+                message: 'Password incorrecta'
+            });
+        }
     } catch (error) {
         res.status(400).json(error.message)
     }
@@ -27,11 +28,10 @@ export const loguearUsuario = async(req,res) =>{
 
 
 export const crearUsuario = async(req,res) =>{
-    try {
-       const nuevoUsuario = new Usuario(req.body)
-       await nuevoUsuario.save()
-       res.status(201).json({mensaje:"Se creo un nuevo usuario"})
-       console.log(req);
+    try { 
+        const nuevoUsuario = new Usuario(req.body)
+        await nuevoUsuario.save()
+        return res.status(201).json({mensaje:"Se creo un nuevo usuario"})
     } catch (error) {
         res.status(400).json(error.message)
     }
@@ -41,7 +41,7 @@ export const crearUsuario = async(req,res) =>{
 export const obtenerUsuarios = async(req,res) =>{
     try {
         const usuarios = await Usuario.find()
-        res.status(200).json(usuarios)
+        return res.status(200).json(usuarios)
     } catch (error) {
         res.status(404).json(error)
     }
@@ -51,7 +51,7 @@ export const obtenerUsuarios = async(req,res) =>{
 export const obtenerUnUsuario = async(req,res) =>{
     try {
         const usuarios = await Usuario.findById(req.params.id)
-        res.status(200).json(usuarios)
+        return res.status(200).json(usuarios)
     } catch (error) {
         res.status(404).json({mensaje:"Error al buscar el usuario"})
     }
