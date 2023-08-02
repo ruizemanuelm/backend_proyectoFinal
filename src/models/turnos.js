@@ -47,7 +47,12 @@ const turnoSchema = new Schema({
       required: true,
     },
   });
-  
+  turnoSchema.set('toJSON', {
+    transform: function (doc, ret) {
+      ret.fechaTurno = ret.fechaTurno.toISOString().slice(0, 10);
+      return ret;
+    },
+  })
   const Turno = model("turno", turnoSchema);
   
   export default Turno;
