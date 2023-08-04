@@ -1,14 +1,13 @@
 import { Schema, model } from 'mongoose'
 
 const pacienteSchema = new Schema({
-    nombre: {
+    nombreDueno: {
       type: String,
       minLength: 2,
       maxLength: 100,
-      required: true,
-      unique: true,
+      required: true
     },
-    apellido: {
+    apellidoDueno: {
       type: String,
       minLength: 2,
       maxLength: 100,
@@ -32,7 +31,6 @@ const pacienteSchema = new Schema({
         required: true,
         validate: {
           validator: function (value) {
-            // Requerir que el número de teléfono tenga solo dígitos y una longitud específica (por ejemplo, 10 dígitos)
             return /^\d{10}$/.test(value);
           },
           message: 'El número de teléfono debe contener 10 dígitos',
@@ -44,11 +42,19 @@ const pacienteSchema = new Schema({
       maxLength: 100,
       required: true,
     },
-    mascota: {
+    nombreMascota: {
       type: String,
       minLength: 2,
       maxLength: 100,
       required: true,
+    },
+    especie: {
+      type: String,
+      required: true
+    },
+    raza: {
+      type: String,
+      required: true
     }
 });
   
