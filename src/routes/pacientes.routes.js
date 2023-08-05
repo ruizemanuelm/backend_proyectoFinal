@@ -7,6 +7,7 @@ import {
   obtenerPacientes,
 } from "../controllers/pacientes.controllers";
 import { check } from "express-validator";
+import validarJWT from "../helpers/token-verify";
 
 const router = Router();
 
@@ -14,7 +15,7 @@ router
   .route("/pacientes")
   .get(obtenerPacientes)
   .post(
-    [
+    [ 
       check("nombreDueno").notEmpty().withMessage("El nombre es obligatorio"),
       check("apellidoDueno")
         .notEmpty()
@@ -57,7 +58,7 @@ router
           "Debe elegir una de las siguientes opciones; Gato,Perro, Conejo"
         ),
       check("raza").notEmpty().withMessage("falla aca"),
-    ],
+      validarJWT,],
     crearPacientes
   );
 router

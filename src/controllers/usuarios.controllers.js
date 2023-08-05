@@ -1,4 +1,6 @@
+import generarJWT from "../helpers/token-sign";
 import Usuario from "../models/usuarios";
+
 
 export const loguearUsuario = async (req, res) => {
     try {
@@ -8,13 +10,16 @@ export const loguearUsuario = async (req, res) => {
                 message: 'Email incorrecto'
             });
         }
+
         const usuario = usuarios[0];
+        const token = await generarJWT  (usuario.nombreUsuario);
         if (usuario.password === req.body.password) {
-            return res.status(202).json({
+            return res.status(200).json({
                 message: 'Usuario logueado',
                 nombreUsuario: usuario.nombreUsuario,
                 email: usuario.email,
-                password: usuario.password
+                password: usuario.password,
+                token
             });
         } else {
             return res.status(400).json({
