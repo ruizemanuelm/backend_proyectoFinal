@@ -69,15 +69,32 @@ export const borrarTurno = async (req, res) => {
 };
 
 export const editarTurno = async (req, res) => {
+  const turnoId = req.params.id;
+  const datosTurnoActualizados = req.body;
+
   try {
-    await Turno.findByIdAndUpdate(req.params.id, req.body);
-    res.status(200).json({
-      mensaje: "Los datos del turno fueron modificados correctamente",
+    const turnoExistente = await Turno.findOne({
+      fechaTurno: datosTurnoActualizados.fechaTurno,
+      hora: datosTurnoActualizados.hora,
+      veterinario: datosTurnoActualizados.veterinario,
+      _id: { $ne: turnoId },
+    });
+
+    if (turnoExistente) {
+      return res.status(409).json({
+        error: 'Turno existente',
+        message: 'Ya existe un turno para esa fecha y hora con el mismo veterinario',
+      });
+    }
+
+    await Turno.findByIdAndUpdate(turnoId, datosTurnoActualizados);
+    return res.status(200).json({
+      mensaje: 'Los datos del turno fueron modificados correctamente',
     });
   } catch (error) {
-    console.log(error);
-    res.status(400).json({
-      mensaje: "No se pudo modificar los datos del turno",
+    console.error(error);
+    return res.status(400).json({
+      mensaje: 'No se pudo modificar los datos del turno',
     });
   }
 };
