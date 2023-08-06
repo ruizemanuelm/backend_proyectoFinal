@@ -22,6 +22,7 @@ const usuarioSchema = new Schema({
   },
   password: {
     type: String,
+    minLength: 8,
     required: true,
     validate: {
       validator: function (value) {

@@ -1,26 +1,24 @@
 import Usuario from "../models/usuarios";
+import bcrypt from 'bcrypt';
 
 export const loguearUsuario = async (req, res) => {
     try {
-        const usuarios = await Usuario.find({ email: req.body.email });
-        if (usuarios.length === 0) {
+        const usuarios = await Usuario.findOne({ email: req.body.email });
+        if (!usuarios) {
             return res.status(400).json({
                 message: 'Email incorrecto'
             });
         }
-        const usuario = usuarios[0];
-        if (usuario.password === req.body.password) {
-            return res.status(202).json({
-                message: 'Usuario logueado',
-                nombreUsuario: usuario.nombreUsuario,
-                email: usuario.email,
-                password: usuario.password
-            });
-        } else {
+        const passwordValido = await bcrypt.compare(req.body.password, usuarios.password)
+        if (!passwordValido) {
             return res.status(400).json({
                 message: 'Password incorrecta'
-            });
-        }
+            });}
+            res.status(200).json({
+                mensaje:'El usuario existe',
+                nombreUsuario: usuarios.nombreUsuario,
+            })
+        
     } catch (error) {
         res.status(400).json(error.message)
     }
@@ -29,7 +27,14 @@ export const loguearUsuario = async (req, res) => {
 
 export const crearUsuario = async(req,res) =>{
     try { 
-        const nuevoUsuario = new Usuario(req.body)
+        let consultarUsuario = await Usuario.findOne({email: req.body.email});
+        if(consultarUsuario){
+            return res.status(400).json({mensaje: 'ya existe un usuario con el correo enviado'})
+        }
+
+        const nuevoUsuario = new Usuario(req.body);
+        const salt = bcrypt.genSaltSync(10)
+        nuevoUsuario.password = bcrypt.hashSync(nuevoUsuario.password, salt);
         await nuevoUsuario.save()
         return res.status(201).json({mensaje:"Se creo un nuevo usuario"})
     } catch (error) {
