@@ -8,6 +8,7 @@ import { check } from "express-validator";
 const router = Router();
 
 router
+  .route('/comentarios')
   .get(obtenerComentarios)
   .post(
     [
@@ -19,3 +20,5 @@ router
     ],
     crearComentarios
   );
+
+  export default router;
