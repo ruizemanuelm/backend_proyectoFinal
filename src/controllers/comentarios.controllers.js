@@ -8,7 +8,7 @@ export const obtenerComentarios = async (req, res) => {
     } catch (error) {
       console.log(error);
       res.status(404).json({
-        mensaje: "Error al buscar los comentarios",
+        mensaje: "Error al buscar los comentarios.",
       });
     }
   };
@@ -25,12 +25,12 @@ export const obtenerComentarios = async (req, res) => {
       const comentarioNuevo = new Comentario(req.body);
       await comentarioNuevo.save();
       res.status(201).json({
-        mensaje: "Se hizo el comentario",
+        mensaje: "Se hizo el comentario.",
       });
     } catch (error) {
       console.log(error);
       res.status(404).json({
-        mensaje: "Error al crear comentario",
+        mensaje: "Error al crear comentario.",
       });
     }
   };
@@ -40,11 +40,11 @@ export const obtenerComentarios = async (req, res) => {
       const { id } = req.params;
       await Comentario.findByIdAndDelete(id);
       res.status(200).json({
-        mensaje:"El comentario fue eliminado"
+        mensaje:"El comentario fue eliminado correctamente."
       });
     }catch(error){
       res.status(404).json({
-        mensaje: "Error al eliminar un comentario"
+        mensaje: "Error al eliminar un comentario."
       })
     }
   }
