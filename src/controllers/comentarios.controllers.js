@@ -34,4 +34,18 @@ export const obtenerComentarios = async (req, res) => {
       });
     }
   };
+
+  export const borrarComentario = async (req, res) => {
+    try{
+      const { id } = req.params;
+      await Comentario.findByIdAndDelete(id);
+      res.status(200).json({
+        mensaje:"El comentario fue eliminado"
+      });
+    }catch(error){
+      res.status(404).json({
+        mensaje: "Error al eliminar un comentario"
+      })
+    }
+  }
   
