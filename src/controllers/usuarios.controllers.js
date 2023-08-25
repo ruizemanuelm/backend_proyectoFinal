@@ -22,6 +22,7 @@ export const loguearUsuario = async (req, res) => {
                 mensaje:'El usuario existe',
                 nombreUsuario: usuarios.nombreUsuario,
                 email: usuarios.email,
+                rol: usuarios.rol,
                 token
 
             })

@@ -19,6 +19,9 @@ const usuarioSchema = new Schema({
       },
       message: "Correo electrónico inválido",
     },
+  },  rol: {
+    type: String,
+    required: true,
   },
   password: {
     type: String,
