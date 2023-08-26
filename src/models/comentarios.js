@@ -9,11 +9,7 @@ const ComentarioSchema = new Schema({
     contenidoComentario: {
       type: String,
       required: true,
-    },
-    evaluacion: {
-      type: String,
-      required: true,
-    },
+    }
   });
   
   const Comentario = model("comentario", ComentarioSchema);
