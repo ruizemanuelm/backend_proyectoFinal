@@ -8,7 +8,6 @@ import usuariosRoutes from "./src/routes/usuarios.routes"
 import turnosRouter from './src/routes/turnos.routes'
 import pacientesRouter from './src/routes/pacientes.routes'
 import comentariosRouter from './src/routes/comentarios.routes'
-import administradorRouter from './src/routes/administrador.routes'
 
 const app = express();
 
@@ -29,4 +28,3 @@ app.use('/apihuellitas', usuariosRoutes);
 app.use('/apihuellitas', turnosRouter)
 app.use('/apihuellitas', pacientesRouter)
 app.use('/apihuellitas', comentariosRouter)
-app.use('/apihuellitas', administradorRouter)
